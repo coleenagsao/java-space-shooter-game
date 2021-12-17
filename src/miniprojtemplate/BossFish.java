@@ -4,7 +4,7 @@ package miniprojtemplate;
 import javafx.scene.image.Image;
 
 public class BossFish extends Fish{
-	public final static int BOSS_FISH_WIDTH = 130;
+	public final static int BOSS_FISH_WIDTH = 110;
 	public final static Image BOSS_FISH_IMAGE = new Image("images/boss.gif",BossFish.BOSS_FISH_WIDTH,BossFish.BOSS_FISH_WIDTH,false,false);
 	private int health;
 

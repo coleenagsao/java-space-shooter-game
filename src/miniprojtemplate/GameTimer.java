@@ -107,7 +107,7 @@ public class GameTimer extends AnimationTimer{
 
 		BossFish boss = this.boss.get(0);
 
-		if((currentSec - startSec) > 5){
+		if((currentSec - startSec) > 30){
 			if(boss.isAlive() == true){
 				boss.setVisible(true);
 				this.moveBoss();
