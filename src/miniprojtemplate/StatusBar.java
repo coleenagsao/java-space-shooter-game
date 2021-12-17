@@ -64,7 +64,12 @@ public class StatusBar {
 		this.score.setText(" "+ this.currentScore);
 		this.score.setFill(Color.WHITE);
 		this.score.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
+	}
 
+	protected void RenderScore(){
+		this.score.setText("SCORE "+ this.currentScore);
+		this.score.setFill(Color.WHITE);
+		this.score.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 30));
 	}
 
 	protected void setStatusTime(int x){

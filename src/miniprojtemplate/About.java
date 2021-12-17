@@ -46,13 +46,6 @@ public class About {
 		}
 
 		VBox menu = this.createVBox();
-		/*
-		Button menubtn = new Button("Menu");
-		menubtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
-		menubtn.setTextFill(Color.WHITE);
-		menubtn.setBackground(null);
-		this.addEventHandler(menubtn, this.gamestage, this.gametimer);
-		*/
 
 		pane.getChildren().add(this.canvas);
 		pane.getChildren().add(menu);

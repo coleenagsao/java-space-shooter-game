@@ -164,7 +164,7 @@ public class GameTimer extends AnimationTimer{
 
 		for(int i=0;i<num;i++){
 			int x = r.nextInt(GameStage.WINDOW_WIDTH - 50);
-			int y = (r.nextInt(GameStage.WINDOW_HEIGHT-100)+50);
+			int y = (r.nextInt(GameStage.WINDOW_HEIGHT-100)+30);
 
 			this.fishes.add(new Fish(x,y)); //Add a new object Fish to the fishes arraylist
 		}
