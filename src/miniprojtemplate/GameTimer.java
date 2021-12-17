@@ -40,7 +40,7 @@ public class GameTimer extends AnimationTimer{
 	private StatusBar statusbar;
 	protected GameStage gameStage;		//temp
 
-	public final Image bg = new Image("images/bg.png",800,500,false,false);
+	public final Image bg = new Image("images/bg3.png",800,500,false,false);
 
 	GameTimer(GraphicsContext gc, Scene theScene, StatusBar status, GameStage stage){
 		this.gc = gc;

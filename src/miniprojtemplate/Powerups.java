@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 
 public class Powerups extends Sprite {
 
-	public final static Image STAR_IMAGE = new Image("images/star.png", Powerups.POWERUP_WIDTH, Powerups.POWERUP_WIDTH, false, false);
-	public final static Image PLUS_IMAGE = new Image("images/poro.png", Powerups.POWERUP_WIDTH, Powerups.POWERUP_WIDTH, false, false); //temp pic of poro
+	public final static Image STAR_IMAGE = new Image("images/star.gif", Powerups.POWERUP_WIDTH, Powerups.POWERUP_WIDTH, false, false);
+	public final static Image PLUS_IMAGE = new Image("images/heart.gif", Powerups.POWERUP_WIDTH, Powerups.POWERUP_WIDTH, false, false); //temp pic of poro
 	public final static int POWERUP_WIDTH = 50;
 	private int powerupID; //1 for star; 2 for health plus
 	private boolean alive;
