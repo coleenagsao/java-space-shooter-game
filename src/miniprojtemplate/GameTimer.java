@@ -164,7 +164,7 @@ public class GameTimer extends AnimationTimer{
 
 		for(int i=0;i<num;i++){
 			int x = r.nextInt(GameStage.WINDOW_WIDTH - 50);
-			int y = r.nextInt((GameStage.WINDOW_HEIGHT - 100) + 50);
+			int y = (r.nextInt(GameStage.WINDOW_HEIGHT-100)+50);
 
 			this.fishes.add(new Fish(x,y)); //Add a new object Fish to the fishes arraylist
 		}
@@ -197,7 +197,7 @@ public class GameTimer extends AnimationTimer{
 	//method that will spawn bossfish on the right
 	private void spawnBossFish(){
 		Random r = new Random();
-		int x = r.nextInt((GameStage.WINDOW_WIDTH/2) + 400);
+		int x = (r.nextInt(GameStage.WINDOW_WIDTH/2) + 400);
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT - 100);
 
 		this.boss.add(new BossFish(x,y));
