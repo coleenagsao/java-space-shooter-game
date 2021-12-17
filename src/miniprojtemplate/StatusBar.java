@@ -1,7 +1,9 @@
 package miniprojtemplate;
 
 import javafx.scene.text.Text;
+
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class StatusBar {
@@ -25,9 +27,9 @@ public class StatusBar {
 		this.timeRemaining = 60;
 		this.elapsedTime = 0;
 		this.currentScore = 0;
-		this.time = new Text(350, 45, "test");
-		this.strength = new Text(500, 45, "test");
-		this.score = new Text(670, 45, "test");
+		this.time = new Text(350, 40, "");
+		this.strength = new Text(500, 38, "");
+		this.score = new Text(670, 40, "");
 		this.Time = new Sprite(300,0);
 		this.Time.loadImage(TIME_IMAGE);
 		this.Strength = new Sprite(450,0);
@@ -54,11 +56,14 @@ public class StatusBar {
 
 	protected void renderText(){
 		this.time.setText(""+ this.timeRemaining);
-		this.time.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 65));
+		this.time.setFill(Color.WHITE);
+		this.time.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
 		this.strength.setText(""+ this.currentStrength);
-		this.strength.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 65));
+		this.strength.setFill(Color.WHITE);
+		this.strength.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
 		this.score.setText(""+ this.currentScore);
-		this.score.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 65));
+		this.score.setFill(Color.WHITE);
+		this.score.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
 
 	}
 
