@@ -6,8 +6,8 @@ import javafx.scene.image.Image;
 
 public class Fish extends Sprite {
 	public static final int MAX_FISH_SPEED = 5;
-	public final static Image FISH_IMAGE = new Image("images/enemy.gif",Fish.FISH_WIDTH,Fish.FISH_WIDTH,false,false);
-	public final static int FISH_WIDTH = 90;
+	public final static Image FISH_IMAGE = new Image("images/boss2.png",Fish.FISH_WIDTH,Fish.FISH_WIDTH,false,false);
+	public final static int FISH_WIDTH = 80;
 	protected boolean alive;
 	//attribute that will determine if a fish will initially move to the right
 	protected boolean moveRight;
@@ -36,7 +36,7 @@ public class Fish extends Sprite {
 			}
 		} else {
 			this.x += this.speed;
-			if(this.x >= 745){ //fix change to gametimer height
+			if(this.x >= (GameStage.WINDOW_WIDTH - 80)){
 				this.moveRight = false;
 				this.move();
 			}

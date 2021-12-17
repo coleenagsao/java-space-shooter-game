@@ -13,7 +13,7 @@ public class Ship extends Sprite{
 	private long ImmortalityStart; //temp
 
 	private ArrayList<Bullet> bullets;
-	public final static Image SHIP_IMAGE = new Image("images/ship.gif",Ship.SHIP_WIDTH,Ship.SHIP_WIDTH,false,false);
+	public final static Image SHIP_IMAGE = new Image("images/ship.png",Ship.SHIP_WIDTH,Ship.SHIP_WIDTH,false,false);
 	private final static int SHIP_WIDTH = 80;
 
 	public Ship(String name, int x, int y){

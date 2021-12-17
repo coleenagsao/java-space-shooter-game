@@ -21,7 +21,7 @@ public class StatusBar {
 	private Sprite Score;
 	public final static Image TIME_IMAGE = new Image("images/timer.png",50,55,false,false);
 	public final static Image STRENGTH_IMAGE = new Image("images/health.png",50,45,false,false);
-	public final static Image SCORE_IMAGE = new Image("images/boss.gif",45,45,false,false);
+	public final static Image SCORE_IMAGE = new Image("images/boss2.png",45,45,false,false);
 
 	StatusBar(){
 		this.timeRemaining = 60;

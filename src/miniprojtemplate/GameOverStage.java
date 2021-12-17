@@ -23,7 +23,7 @@ public class GameOverStage {
 
 	public final Image win = new Image("images/win.png",800,500,false,false);
 	public final Image lose = new Image("images/lose.png",800,500,false,false);
-	public final static Image SCORE_IMAGE = new Image("images/boss.gif",45,45,false,false);
+	public final static Image SCORE_IMAGE = new Image("images/boss2.png",45,45,false,false);
 
 	GameOverStage(int num, StatusBar statusbar){
 		this.pane = new StackPane();
