@@ -399,4 +399,8 @@ public class GameTimer extends AnimationTimer{
 	public Ship getShip(){
 		return this.myShip;
 	}
+
+	Scene getScene(){
+		return this.theScene;
+	}
 }

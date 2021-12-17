@@ -38,14 +38,16 @@ public class GameStage {
 		this.gc = canvas.getGraphicsContext2D();
 		//instantiate an animation timer
 		this.statusbar = new StatusBar();
-		this.gametimer = new GameTimer(this.gc,this.scene,this.statusbar, this);
+		//this.gametimer = new GameTimer(this.gc,this.scene,this.statusbar, this);
 	}
 
 	//method to add the stage elements
 	public void setStage(Stage stage) {
 		this.stage = stage;
 
+		this.setMenu(this.gametimer, this);
 		//set stage elements here
+
 		this.root.getChildren().add(canvas);
 		this.root.getChildren().add(statusbar.getTimeText());
 		this.root.getChildren().add(statusbar.getStrengthText());
@@ -55,9 +57,12 @@ public class GameStage {
 		this.stage.setScene(this.scene);
 
 		//invoke the start method of the animation timer
-		this.gametimer.start();
+
+		//this.gametimer.start();
 
 		this.stage.show();
+
+
 	}
 
 	void setGameOver(int num){ //1 for win; 0 for lose
@@ -70,5 +75,47 @@ public class GameStage {
 				stage.setScene(gameover.getScene());
 			}
 		});
+	}
+
+	void setMenu(GameTimer gametimer, GameStage gamestage){
+		PauseTransition transition = new PauseTransition(Duration.seconds(1));
+		transition.play();
+
+		transition.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				GameMenu gamemenu = new GameMenu(gametimer, gamestage);
+				stage.setScene(gamemenu.getScene());
+			}
+		});
+	}
+
+	void setAbout(int num, GameTimer gametimer, GameStage gamestage){
+		PauseTransition transition = new PauseTransition(Duration.seconds(1));
+		transition.play();
+
+		transition.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				About about = new About(num, gamestage, gametimer);
+				stage.setScene(about.getScene());
+			}
+		});
+	}
+
+	void startGame(GameTimer gametimer){
+		PauseTransition transition = new PauseTransition(Duration.seconds(1));
+		transition.play();
+
+		transition.setOnFinished(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				GameTimer gametimer = createGameTimer();
+				stage.setScene(gametimer.getScene());
+				gametimer.start();
+			}
+		});
+	}
+
+	GameTimer createGameTimer(){
+		GameTimer gametimer = new GameTimer(this.gc,this.scene,this.statusbar, this);
+		return gametimer;
 	}
 }
