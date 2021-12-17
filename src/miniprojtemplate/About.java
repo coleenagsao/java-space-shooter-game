@@ -8,8 +8,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -43,14 +45,19 @@ public class About {
 			this.gc.drawImage(this.about, 0,0);
 		}
 
+		VBox menu = this.createVBox();
+		/*
 		Button menubtn = new Button("Menu");
-		menubtn.setAlignment(Pos.BASELINE_RIGHT);	//PROBLEM: Not in the baseline right
-
+		menubtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
+		menubtn.setTextFill(Color.WHITE);
+		menubtn.setBackground(null);
 		this.addEventHandler(menubtn, this.gamestage, this.gametimer);
+		*/
 
 		pane.getChildren().add(this.canvas);
-		pane.getChildren().add(menubtn);
+		pane.getChildren().add(menu);
 	}
+
 
 	private void addEventHandler(Button btn, GameStage gamestage, GameTimer gametimer) {
 		btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -62,6 +69,22 @@ public class About {
 
 	}
 
+	private VBox createVBox() {
+        VBox vbox = new VBox();
+
+        vbox.setAlignment(Pos.BOTTOM_RIGHT);
+        //vbox.setPadding(new Insets(100));
+        vbox.setSpacing(3);
+
+		Button menubtn = new Button("Menu");
+		menubtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 20));
+		menubtn.setTextFill(Color.WHITE);
+		menubtn.setBackground(null);
+		this.addEventHandler(menubtn, this.gamestage, this.gametimer);
+
+		vbox.getChildren().add(menubtn);
+        return vbox;
+    }
 	Scene getScene(){
 		return this.scene;
 	}

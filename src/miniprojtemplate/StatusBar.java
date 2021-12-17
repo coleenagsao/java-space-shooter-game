@@ -55,13 +55,13 @@ public class StatusBar {
 	}
 
 	protected void renderText(){
-		this.time.setText(""+ this.timeRemaining);
+		this.time.setText(" "+ this.timeRemaining);
 		this.time.setFill(Color.WHITE);
 		this.time.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
 		this.strength.setText(""+ this.currentStrength);
 		this.strength.setFill(Color.WHITE);
 		this.strength.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
-		this.score.setText(""+ this.currentScore);
+		this.score.setText(" "+ this.currentScore);
 		this.score.setFill(Color.WHITE);
 		this.score.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 40));
 

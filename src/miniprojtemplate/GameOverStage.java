@@ -38,8 +38,12 @@ public class GameOverStage {
 			this.gc.drawImage(this.win, 0,0);
 		}
 
-		Button exitbtn = new Button("Exit Game");
+		Button exitbtn = new Button("Exit");
+		exitbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
 		this.addEventHandler(exitbtn);
+		exitbtn.setTextFill(Color.WHITE);
+		exitbtn.setBackground(null);
+
 
 
 		pane.getChildren().add(this.canvas);

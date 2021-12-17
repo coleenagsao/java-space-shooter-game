@@ -8,9 +8,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class GameMenu {
 	private StackPane pane;
@@ -42,23 +45,36 @@ public class GameMenu {
 		pane.getChildren().add(choices);
 	}
 
+
     private VBox createVBox() {
         VBox vbox = new VBox();
 
         vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(100));
-        vbox.setSpacing(15);
+        vbox.setPadding(new Insets(35, 0, 0, 300));
+        vbox.setSpacing(3);
 
         Button startbtn = new Button("Start");
+        startbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
+        startbtn.setTextFill(Color.WHITE);
+        startbtn.setBackground(null);
         this.addEventHandler(startbtn, 1, this.gametimer, this.gameStage);
 
 		Button instbtn = new Button("Instructions");
+		instbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
+		instbtn.setTextFill(Color.WHITE);
+		instbtn.setBackground(null);
 		this.addEventHandler(instbtn, 2, this.gametimer, this.gameStage);
 
 		Button abtbtn = new Button("About");
+		abtbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
+		abtbtn.setTextFill(Color.WHITE);
+		abtbtn.setBackground(null);
 		this.addEventHandler(abtbtn, 3, this.gametimer, this.gameStage);
 
 		Button exitbtn = new Button("Exit");
+		exitbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
+		exitbtn.setTextFill(Color.WHITE);
+		exitbtn.setBackground(null);
 		this.addEventHandler(exitbtn, 4, this.gametimer, this.gameStage);
 
         vbox.getChildren().addAll(startbtn, instbtn, abtbtn, exitbtn);
