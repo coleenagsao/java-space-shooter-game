@@ -116,7 +116,7 @@ public class GameTimer extends AnimationTimer{
 		}
 
 		if((currentSec - startSec) >= 60){
-			gameStage.setGameOver(1);
+			gameStage.setGameOver(1, this.statusbar);
 			this.stop();
 		}
 
@@ -126,7 +126,7 @@ public class GameTimer extends AnimationTimer{
 
 		//check strength
 		if (myShip.getStrength() <= 0){
-			gameStage.setGameOver(0);
+			gameStage.setGameOver(0, this.statusbar);
 			this.stop();
 		}
 

@@ -99,5 +99,9 @@ public class StatusBar {
 	public Sprite getScore(){
 		return this.Score;
 	}
+
+	public int getCurrentScore(){
+		return this.currentScore;
+	}
 }
 

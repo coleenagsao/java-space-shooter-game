@@ -65,13 +65,13 @@ public class GameStage {
 
 	}
 
-	void setGameOver(int num){ //1 for win; 0 for lose
+	void setGameOver(int num, StatusBar statusbar){ //1 for win; 0 for lose
 		PauseTransition transition = new PauseTransition(Duration.seconds(1));
 		transition.play();
 
 		transition.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
-				GameOverStage gameover = new GameOverStage(num);
+				GameOverStage gameover = new GameOverStage(num, statusbar);
 				stage.setScene(gameover.getScene());
 			}
 		});
