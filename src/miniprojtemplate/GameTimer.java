@@ -289,8 +289,6 @@ public class GameTimer extends AnimationTimer{
 						myShip.setStrength(30);
 						if (myShip.getStrength() <= 0){
 							System.out.println("You died!");
-							gameStage.setGameOver(0);
-							this.stop();
 						}
 					}
 					System.out.println(myShip.getStrength());
