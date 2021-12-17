@@ -115,7 +115,7 @@ public class GameTimer extends AnimationTimer{
 			}
 		}
 
-		if((currentSec - startSec) >= 60){
+		if((currentSec - startSec) >= 2){
 			gameStage.setGameOver(1, this.statusbar);
 			this.stop();
 		}

@@ -20,6 +20,7 @@ public class GameOverStage {
 	private GraphicsContext gc;
 	private Canvas canvas;
 	private StatusBar statusbar;
+	private Text score;
 
 	public final Image win = new Image("images/win.png",800,500,false,false);
 	public final Image lose = new Image("images/lose.png",800,500,false,false);
@@ -32,6 +33,7 @@ public class GameOverStage {
 		this.gc = canvas.getGraphicsContext2D();
 		this.statusbar = statusbar;
 		this.setProperties(num);
+		this.score = new Text(250,400, "SCORE");
 
 	}
 
@@ -43,7 +45,10 @@ public class GameOverStage {
 		}
 
 		//TODO: Add text here
-		//this.score.setText(" "+ this.statusbar.getCurrentScore());
+		this.statusbar.RenderScore();
+
+
+
 
 		Button exitbtn = new Button("Exit");
 		exitbtn.setFont(Font.loadFont("file:resources/fonts/ARCADECLASSIC.ttf", 18));
@@ -52,6 +57,7 @@ public class GameOverStage {
 		exitbtn.setBackground(null);
 
 		pane.getChildren().add(this.canvas);
+		pane.getChildren().add(statusbar.getScoreText());
 		pane.getChildren().add(exitbtn);
 	}
 
