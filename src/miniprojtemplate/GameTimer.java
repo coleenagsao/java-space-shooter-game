@@ -25,13 +25,13 @@ public class GameTimer extends AnimationTimer{
 	private GraphicsContext gc;
 	private Scene theScene;
 	private Ship myShip;
-	private ArrayList<Fish> fishes;
-	public static final int INITIAL_NUM_FISHES = 7;
-	public static final int NUM_FISHES = 3;
+	private ArrayList<Enemy> enemies;
+	public static final int INITIAL_NUM_ENEMIES = 7;
+	public static final int NUM_ENEMIES = 3;
 
 	private long startSpawn;
 	private long elapsedTime;
-	private ArrayList<BossFish> boss;
+	private ArrayList<Boss> boss;
 	private long startSpawn1;
 
 	private ArrayList <Powerups> stars;			//temp
@@ -53,8 +53,8 @@ public class GameTimer extends AnimationTimer{
 
 		this.statusbar = status;
 		//instantiate the ArrayList of Fish
-		this.fishes = new ArrayList<Fish>();
-		this.boss = new ArrayList<BossFish>();
+		this.enemies = new ArrayList<Enemy>();
+		this.boss = new ArrayList<Boss>();
 
 		this.startSpawn = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
 		this.elapsedTime = 5;
@@ -63,14 +63,14 @@ public class GameTimer extends AnimationTimer{
 		this.plusHealths = new ArrayList<Powerups>();	//temp
 
 		//call the spawnFishes method
-		this.spawnFishes(GameTimer.INITIAL_NUM_FISHES);
+		this.spawnEnemies(GameTimer.INITIAL_NUM_ENEMIES);
 
 		this.spawnPowerups(1);
 		this.spawnPowerups(2);
 
-		this.spawnBossFish();
+		this.spawnBoss();
 
-		this.spawnFishesInterval();
+		this.spawnEnemiesInterval();
 		//call method to handle mouse click event
 		this.handleKeyPressEvent();
 
@@ -86,12 +86,12 @@ public class GameTimer extends AnimationTimer{
 		//calls the move for ship, bullets, and fishes
 		this.myShip.move();
 		this.moveBullets(this.statusbar);
-		this.moveFishes();
+		this.moveEnemies();
 
 		//render the ship, fishes, bullets, and powerups
 		this.myShip.render(this.gc);
 		this.renderBullets();
-		this.renderFishes();
+		this.renderEnemies();
 
 		this.renderPowerups(1);
 		this.renderPowerups(2);
@@ -105,21 +105,24 @@ public class GameTimer extends AnimationTimer{
 		long currentSec = TimeUnit.NANOSECONDS.toSeconds(currentNanoTime);
 		long startSec = TimeUnit.NANOSECONDS.toSeconds(this.startSpawn1);
 
-		BossFish boss = this.boss.get(0);
+		//set boss timer spawn
+		Boss boss = this.boss.get(0);
 
 		if((currentSec - startSec) > 30){
 			if(boss.isAlive() == true){
 				boss.setVisible(true);
 				this.moveBoss();
-				this.renderBossFish();
+				this.renderBoss();
 			}
 		}
 
+		//win after 60 seconds
 		if((currentSec - startSec) >= 60){
 			gameStage.setGameOver(1, this.statusbar);
 			this.stop();
 		}
 
+		//implement statusbar
 		this.renderStatusBar(this.statusbar);
 		this.statusbar.setStatusStrength(this.myShip.getStrength());
 		this.statusbar.renderText();
@@ -133,8 +136,8 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	//method that will render/draw the fishes to the canvas
-	private void renderFishes() {
-		for (Fish f : this.fishes){
+	private void renderEnemies() {
+		for (Enemy f : this.enemies){
 			f.render(this.gc);
 		}
 	}
@@ -158,23 +161,34 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
+	private void renderBoss() {
+		Boss boss = this.boss.get(0);
+		boss.render(this.gc);
+	}
+
+	private void renderStatusBar(StatusBar status){
+		status.getTime().render(this.gc);
+		status.getStrength().render(this.gc);
+		status.getScore().render(this.gc);
+	}
+
 	//method that will spawn/instantiate three fishes at a random x,y location
-	private void spawnFishes(int num){
+	private void spawnEnemies(int num){
 		Random r = new Random();
 
 		for(int i=0;i<num;i++){
 			int x = r.nextInt(GameStage.WINDOW_WIDTH - 50);
 			int y = (r.nextInt(GameStage.WINDOW_HEIGHT-100)+30);
 
-			this.fishes.add(new Fish(x,y)); //Add a new object Fish to the fishes arraylist
+			this.enemies.add(new Enemy(x,y)); //Add a new object Fish to the fishes arraylist
 		}
 	}
 
-	private void spawnFishesInterval(){
+	private void spawnEnemiesInterval(){
 		Timer timer = new Timer(3000, new ActionListener(){
             		@Override
             		public void actionPerformed(ActionEvent e) {
-            			spawnFishes(GameTimer.NUM_FISHES);
+            			spawnEnemies(GameTimer.NUM_ENEMIES);
             			//System.out.println("Spawning fishes...");
             		}
         	});
@@ -182,33 +196,14 @@ public class GameTimer extends AnimationTimer{
         timer.start();
 	}
 
-	//method for the timer in statusbar
-	private void runningTime(){
-		Timer timer = new Timer(1000, new ActionListener(){
-            		@Override
-            		public void actionPerformed(ActionEvent e) {
-            			statusbar.setStatusTime(1);
-            		}
-        	});
-
-        timer.start();
-	}
-
 	//method that will spawn bossfish on the right
-	private void spawnBossFish(){
+	private void spawnBoss(){
 		Random r = new Random();
 		int x = (r.nextInt(GameStage.WINDOW_WIDTH/2) + 400);
 		int y = r.nextInt(GameStage.WINDOW_HEIGHT - 100);
 
-		this.boss.add(new BossFish(x,y));
+		this.boss.add(new Boss(x,y));
 	}
-
-
-	private void renderBossFish() {
-		BossFish boss = this.boss.get(0);
-		boss.render(this.gc);
-	}
-
 
 	//method that will spawn a powerup at a random left location
 	private void spawnPowerupsR(int ID){
@@ -247,8 +242,8 @@ public class GameTimer extends AnimationTimer{
 				b.move();
 
 				//check if fishes collided with a bullet
-				for(int j = 0; j < this.fishes.size(); j++){  //iterates through the fish arraylist
-					Fish f = this.fishes.get(j);
+				for(int j = 0; j < this.enemies.size(); j++){  //iterates through the fish arraylist
+					Enemy f = this.enemies.get(j);
 
 					if (f.isVisible()){						 //if fish is visible, actively checks if it collided with a bullet
 						if (b.collidesWith(f)){
@@ -258,7 +253,7 @@ public class GameTimer extends AnimationTimer{
 						}
 					}
 				}
-				BossFish boss = this.boss.get(0);
+				Boss boss = this.boss.get(0);
 				if(boss.isVisible()){
 					if (b.collidesWith(boss)){
 						boss.setHealth(this.myShip.getStrength());
@@ -276,10 +271,10 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	//method that will move the fishes
-	private void moveFishes(){
+	private void moveEnemies(){
 		//Loop through the fishes arraylist
-		for(int i = 0; i < this.fishes.size(); i++){
-			Fish f = this.fishes.get(i);
+		for(int i = 0; i < this.enemies.size(); i++){
+			Enemy f = this.enemies.get(i);
 
 			if(f.isAlive() == true){ //if a fish is alive, move the fish.
 				//check if fish collides with a ship
@@ -296,13 +291,13 @@ public class GameTimer extends AnimationTimer{
 				f.move();
 
 			} else { //else, remove the fish from the fishes arraylist
-				this.fishes.remove(f);
+				this.enemies.remove(f);
 			}
 		}
 	}
 
 	private void moveBoss(){
-		BossFish boss = this.boss.get(0);
+		Boss boss = this.boss.get(0);
 		if(boss.isAlive() == true){
 			boss.move();
 			if (boss.collidesWith(this.myShip)){
@@ -349,12 +344,16 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	private void renderStatusBar(StatusBar status){
-		status.getTime().render(this.gc);
-		status.getStrength().render(this.gc);
-		status.getScore().render(this.gc);
+	//method for the timer in statusbar
+	private void runningTime(){
+		Timer timer = new Timer(1000, new ActionListener(){
+	            	@Override
+	            	public void actionPerformed(ActionEvent e) {
+	            		statusbar.setStatusTime(1);
+	            	}
+	        });
+	    timer.start();
 	}
-
 
 	//method that will listen and handle the key press events
 	private void handleKeyPressEvent() {
