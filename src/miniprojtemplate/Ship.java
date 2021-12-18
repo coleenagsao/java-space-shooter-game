@@ -9,8 +9,8 @@ public class Ship extends Sprite{
 	private int strength;
 	private boolean alive;
 
-	private boolean isImmortal; //temp
-	private long ImmortalityStart; //temp
+	private boolean isImmortal;
+	private long ImmortalityStart;
 
 	private ArrayList<Bullet> bullets;
 	public final static Image SHIP_IMAGE = new Image("images/ship.png",Ship.SHIP_WIDTH,Ship.SHIP_WIDTH,false,false);
@@ -20,7 +20,7 @@ public class Ship extends Sprite{
 		super(x,y);
 		this.name = name;
 		Random r = new Random();
-		this.strength = r.nextInt(151) +100;
+		this.strength = r.nextInt(151) + 100;
 
 		this.isImmortal = false;
 		this.ImmortalityStart = 0;
@@ -50,8 +50,8 @@ public class Ship extends Sprite{
 	//method called if spacebar is pressed
 	public void shoot(){
 		//compute for the x and y initial position of the bullet
-		int x = (int) (this.x + this.width+20);
-		int y = (int) ((this.y + this.height/2) - 10);
+		int x = (int) (this.x + this.width + 20);
+		int y = (int) ((this.y + this.height / 2) - 10);
 
 		//instantiate a new bullet
 		Bullet bullet = new Bullet(x,y);
@@ -62,15 +62,10 @@ public class Ship extends Sprite{
 
 	//method called if up/down/left/right arrow key is pressed.
 	public void move() {
-		/*
-		 *TODO: 		Only change the x and y position of the ship if the current x,y position
-		 *				is within the gamestage width and height so that the ship won't exit the screen
-		 */
-
 		int currentX = this.x + this.dx;
 		int currentY = this.y + this.dy;
 
-		if (currentX < (GameStage.WINDOW_WIDTH - 50) && currentY < (GameStage.WINDOW_HEIGHT - 50) && currentX > 0 && currentY > 0){
+		if (currentX < (GameStage.WINDOW_WIDTH - 80) && currentY < (GameStage.WINDOW_HEIGHT - 80) && currentX > 0 && currentY > 50){ //currentY should be greater than 50 to account for the statusBar
 			this.x = currentX;
 			this.y = currentY;
 			this.setVisible(true);
@@ -90,7 +85,7 @@ public class Ship extends Sprite{
 		return this.ImmortalityStart;
 	}
 
-	//setter
+	//setters
 	public void setStrength(int value){
 		this.strength -= value;
 	}
