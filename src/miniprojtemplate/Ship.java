@@ -11,8 +11,8 @@ public class Ship extends Sprite{
 
 	private boolean isImmortal;
 	private long ImmortalityStart;
-
 	private ArrayList<Bullet> bullets;
+
 	public final static Image SHIP_IMAGE = new Image("images/ship.png",Ship.SHIP_WIDTH,Ship.SHIP_WIDTH,false,false);
 	private final static int SHIP_WIDTH = 80;
 
@@ -20,13 +20,13 @@ public class Ship extends Sprite{
 		super(x,y);
 		this.name = name;
 		Random r = new Random();
-		this.strength = r.nextInt(151) + 100;
+		this.strength = r.nextInt(51) + 100;		//ship must have strength from 100-150
+		this.alive = true;
 
 		this.isImmortal = false;
 		this.ImmortalityStart = 0;
-
-		this.alive = true;
 		this.bullets = new ArrayList<Bullet>();
+
 		this.loadImage(Ship.SHIP_IMAGE);
 	}
 
