@@ -5,29 +5,26 @@ import java.util.Random;
 import javafx.scene.image.Image;
 
 public class Enemy extends Sprite {
-	public static final int MAX_ENEMY_SPEED = 5;
-	public final static Image ENEMY_IMAGE = new Image("images/boss2.png",Enemy.FISH_WIDTH,Enemy.FISH_WIDTH,false,false);
-	public final static int FISH_WIDTH = 80;
 	protected boolean alive;
-	//attribute that will determine if a fish will initially move to the right
 	protected boolean moveRight;
 	protected int speed;
 
+	public final static int MAX_ENEMY_SPEED = 5;
+	public final static int ENEMY_WIDTH = 80;
+	public final static Image ENEMY_IMAGE = new Image("images/boss2.png",Enemy.ENEMY_WIDTH,Enemy.ENEMY_WIDTH,false,false);
 
 	Enemy(int x, int y){
 		super(x,y);
 		this.alive = true;
-		this.loadImage(Enemy.ENEMY_IMAGE);
-		/*
-		 *TODO: Randomize speed of fish and moveRight's initial value
-		 */
-		Random r = new Random();
-		this.speed = r.nextInt(5) + 1;
 		this.moveRight = false;
+
+		Random r = new Random();
+		this.speed = r.nextInt(5) + 1;  //set movement between 1 - 5 only
+
+		this.loadImage(Enemy.ENEMY_IMAGE);
 	}
 
-	//method that changes the x position of the fish
-	protected void move(){
+	protected void move(){									//method that changes the x position of the fish
 		if(this.moveRight == false && this.x >= 0){
 			this.x -= this.speed;
 			if(this.x <= 0){
@@ -44,16 +41,13 @@ public class Enemy extends Sprite {
 	}
 
 	//getter
-	public boolean isAlive() {
+	protected boolean isAlive() {
 		return this.alive;
 	}
 
 	//setter
-	protected void die(){ //temp
+	protected void die(){
     	this.alive = false;
     }
 
-	public void setDirection(boolean value){
-		this.moveRight = value;
-	}
 }

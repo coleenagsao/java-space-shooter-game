@@ -28,6 +28,8 @@ public class Ship extends Sprite{
 		this.bullets = new ArrayList<Bullet>();
 
 		this.loadImage(Ship.SHIP_IMAGE);
+
+		System.out.println("[GAME START] Ship initially has " + this.strength + " strength.");
 	}
 
 	public boolean isAlive(){

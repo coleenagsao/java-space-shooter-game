@@ -135,14 +135,14 @@ public class GameTimer extends AnimationTimer{
 
 	}
 
-	//method that will render/draw the fishes to the canvas
-	private void renderEnemies() {
+	//RENDER METHODS
+	private void renderEnemies() {							//method that will render/draw the enemies to the canvas
 		for (Enemy f : this.enemies){
 			f.render(this.gc);
 		}
 	}
 
-	private void renderPowerups(int ID){
+	private void renderPowerups(int ID){					//method that will render powerup depending on ID. 1 for star, 0 for plus
 		if (ID == 1){
 			for (Powerups stars : this.stars){
 				stars.render(gc);
@@ -154,10 +154,9 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	//method that will render/draw the bullets to the canvas
-	private void renderBullets() {
-		for (Bullet b: this.myShip.getBullets()){  //loop through the bullets arraylist of myShip
-			b.render(this.gc);					   //render each bullet to the canvas
+	private void renderBullets() {							//method that will render/draw the bullets to the canvas
+		for (Bullet b: this.myShip.getBullets()){
+			b.render(this.gc);
 		}
 	}
 
@@ -172,84 +171,87 @@ public class GameTimer extends AnimationTimer{
 		status.getScore().render(this.gc);
 	}
 
-	//method that will spawn/instantiate three fishes at a random x,y location
-	private void spawnEnemies(int num){
+	private void runningTime(){								//method for the timer in statusbar
+		Timer timer = new Timer(1000, new ActionListener(){
+	            	@Override
+	            	public void actionPerformed(ActionEvent e) {
+	            		statusbar.setStatusTime(1);
+	            	}
+	        });
+	    timer.start();
+	}
+
+	//SPAWN METHODS
+	private void spawnEnemies(int num){					  					//method that will spawn/instantiate three enemies at a random x,y location
 		Random r = new Random();
 
-		for(int i=0;i<num;i++){
-			int x = r.nextInt(GameStage.WINDOW_WIDTH - 50);
-			int y = (r.nextInt(GameStage.WINDOW_HEIGHT-100)+30);
+		for(int i = 0; i < num; i++){
+			int x = r.nextInt((GameStage.WINDOW_WIDTH/2) - 100) + 400;		//x should be on the right portion only
+			int y = r.nextInt(GameStage.WINDOW_HEIGHT - 130) + 50;
 
-			this.enemies.add(new Enemy(x,y)); //Add a new object Fish to the fishes arraylist
+			this.enemies.add(new Enemy(x,y));
 		}
 	}
 
-	private void spawnEnemiesInterval(){
+	private void spawnEnemiesInterval(){									//method that calls spawnEnemies per 3 seconds
 		Timer timer = new Timer(3000, new ActionListener(){
             		@Override
             		public void actionPerformed(ActionEvent e) {
             			spawnEnemies(GameTimer.NUM_ENEMIES);
-            			//System.out.println("Spawning fishes...");
             		}
         	});
 
         timer.start();
 	}
 
-	//method that will spawn bossfish on the right
-	private void spawnBoss(){
+	private void spawnBoss(){												//method that will spawn bossfish on the right
 		Random r = new Random();
-		int x = (r.nextInt(GameStage.WINDOW_WIDTH/2) + 400);
-		int y = r.nextInt(GameStage.WINDOW_HEIGHT - 100);
+		int x = r.nextInt((GameStage.WINDOW_WIDTH/2) - 100) + 400;
+		int y = r.nextInt(GameStage.WINDOW_HEIGHT - 130) + 50;
 
 		this.boss.add(new Boss(x,y));
 	}
 
-	//method that will spawn a powerup at a random left location
-	private void spawnPowerupsR(int ID){
+	private void spawnPowerupsR(int ID){								   //method that will spawn a powerup at a random left location
 		Random r = new Random();
 
 		for (int i = 0; i < 1; i++){
-			int x = r.nextInt((GameStage.WINDOW_WIDTH - 50)/2); 		//to spawn in left location only
-			int y = r.nextInt(GameStage.WINDOW_HEIGHT - 50);
+			int x = r.nextInt((GameStage.WINDOW_WIDTH - 100)/2) + 10; 	   //to spawn in left location only
+			int y = r.nextInt(GameStage.WINDOW_HEIGHT - 100) + 50;
 
 			if (ID == 1) this.stars.add(new Powerups(ID,x,y));
 			else this.plusHealths.add(new Powerups(ID,x,y));
 		}
 	}
 
-	//method that will call spawnPowerup every 10-seconds
-	private void spawnPowerups(int ID){
+	private void spawnPowerups(int ID){									 //method that will call spawnPowerup every 10 seconds
         Timer timer = new Timer(10000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
             	spawnPowerupsR(ID);
             }
         });
-
         timer.start();
 	}
 
-	//method that will move the bullets shot by a ship
-	private void moveBullets(StatusBar status){
-		//create a local arraylist of Bullets for the bullets 'shot' by the ship
-		ArrayList<Bullet> bList = this.myShip.getBullets();
+	//MOVE METHODS
+	private void moveBullets(StatusBar status){							//method that will move the bullets shot by a ship
+		ArrayList<Bullet> bList = this.myShip.getBullets();				//create a local arraylist of Bullets for the bullets 'shot' by the ship
 
-		//Loop through the bullet list and check whether a bullet is still visible.
-		for(int i = 0; i < bList.size(); i++){
+		for(int i = 0; i < bList.size(); i++){							//loop through the bullet list and check whether a bullet is still visible.
 			Bullet b = bList.get(i);
-			if (b.isVisible()){ 							  //if a bullet is visible, move the bullet
+			if (b.isVisible()){ 							  			//if a bullet is visible, move the bullet
 				b.move();
 
 				//check if fishes collided with a bullet
-				for(int j = 0; j < this.enemies.size(); j++){  //iterates through the fish arraylist
+				for(int j = 0; j < this.enemies.size(); j++){  			//iterates through the fish arraylist
 					Enemy f = this.enemies.get(j);
 
-					if (f.isVisible()){						 //if fish is visible, actively checks if it collided with a bullet
+					if (f.isVisible()){						 			//if fish is visible, actively checks if it collided with a bullet
 						if (b.collidesWith(f)){
 							f.die();
 							b.setVisible(false);
-							status.setStatusScore(1);
+							status.setStatusScore(1);					//update the score in the statusbar
 						}
 					}
 				}
@@ -263,34 +265,25 @@ public class GameTimer extends AnimationTimer{
 						}
 					}
 				}
-
-			} else {				//else, remove the bullet from the bullet array list
+			} else {													//else, remove the bullet from the bullet array list
 				bList.remove(i);
 			}
 		}
 	}
 
-	//method that will move the fishes
-	private void moveEnemies(){
-		//Loop through the fishes arraylist
-		for(int i = 0; i < this.enemies.size(); i++){
+	private void moveEnemies(){											//method that will move the enemies
+		for(int i = 0; i < this.enemies.size(); i++){					//loop through the enemies arraylist
 			Enemy f = this.enemies.get(i);
 
-			if(f.isAlive() == true){ //if a fish is alive, move the fish.
-				//check if fish collides with a ship
-				if (f.collidesWith(myShip)){
-					f.die();
-					if (myShip.getIsImmortal() == false){
+			if(f.isAlive() == true){ 									//if a fish is alive, move the fish.
+				if (f.collidesWith(myShip)){							//check if fish collides with a ship
+					f.die();											//either ship is immortal or not, the enemy dies when hit
+					if (myShip.getIsImmortal() == false){				//if ship is not immortal, 30 is substracted to ship
 						myShip.setStrength(30);
-						if (myShip.getStrength() <= 0){
-							System.out.println("You died!");
-						}
 					}
-					System.out.println(myShip.getStrength());
 				}
 				f.move();
-
-			} else { //else, remove the fish from the fishes arraylist
+			} else { 													//if enemy is dead, remove from the arraylist
 				this.enemies.remove(f);
 			}
 		}
@@ -302,58 +295,42 @@ public class GameTimer extends AnimationTimer{
 			boss.move();
 			if (boss.collidesWith(this.myShip)){
 				if (myShip.getIsImmortal() == false){
-					myShip.setStrength(15);
+					myShip.setStrength(50);								//reduce the ship's strength by 50 when hit by boss
 					boss.setMoveRight(true);
 				}
-				boss.move();
-				System.out.println(myShip.getStrength());
 			}
 		} else {
 			this.boss.remove(0);
 		}
 	}
 
-	//HOW TO CHECK COLLISSION WITH SHIP
 
-	private void checkPowerups(ArrayList<Powerups> array, int ID, long elapsedTime){
-		//check immortality
-		if ((elapsedTime - myShip.getImmortalityStart()) == 3 && myShip.getIsImmortal() == true){  //NOT EXPIRING SOMETIMES, FOR THE 2ND TIME
+	private void checkPowerups(ArrayList<Powerups> array, int ID, long elapsedTime){				//method that actively checks powerups
+		if ((elapsedTime - myShip.getImmortalityStart()) == 3 && myShip.getIsImmortal() == true){ 	//checks if 3 second already passed after immortality is granted
+			myShip.setIsImmortal(false);															//set the isImmortal as false
+			myShip.setImmortalityStart(0); 															//reset the start timer to 0 again
 			System.out.println("[IMMORTALITY EXPIRED] 3 seconds has passed");
-			myShip.setIsImmortal(false);	//set the isImmortal as false
-			myShip.setImmortalityStart(0); 	//reset the start timer to 0 again
 		}
+
 		for (int i = 0; i < array.size(); i++){
 			Powerups p = array.get(i);
-			if (p.visible == true){ 			//if still visible check if ship collides
+			if (p.visible == true){ 												//if still visible, check if ship collides with it
 				if (p.collidesWith(myShip)){
 					p.setVisible(false);
 					if (ID == 2){
-						System.out.println("Original: " + myShip.getStrength());
-						myShip.setStrength(-30);
-						System.out.println("New Strength:" + myShip.getStrength()); //temp
+						myShip.setStrength(-30);									//add 30 to the strength of ship
 					} else {
-						System.out.println("[IMMORTALITY GRANTED]");
 						myShip.setIsImmortal(true);
 						myShip.setImmortalityStart(elapsedTime);
-						//System.out.println("Start of Immortality:" + myShip.getImmortalityStart());
+						System.out.println("[IMMORTALITY GRANTED] Immortality star has been collected.");
 					}
-				} if (elapsedTime - p.getStartSpawn() == 5){
-					p.setVisible(false);
+				} if (elapsedTime - p.getStartSpawn() == 5){						//checks if 5 seconds already passed after powerups is spawned
+					p.setVisible(false);											//set to invisible
 				}
 			} else array.remove(p);
 		}
 	}
 
-	//method for the timer in statusbar
-	private void runningTime(){
-		Timer timer = new Timer(1000, new ActionListener(){
-	            	@Override
-	            	public void actionPerformed(ActionEvent e) {
-	            		statusbar.setStatusTime(1);
-	            	}
-	        });
-	    timer.start();
-	}
 
 	//method that will listen and handle the key press events
 	private void handleKeyPressEvent() {
@@ -376,7 +353,7 @@ public class GameTimer extends AnimationTimer{
 
 	//method that will move the ship depending on the key pressed
 	private void moveMyShip(KeyCode ke) {
-		if(ke==KeyCode.UP) this.myShip.setDY(-3); //changed from 3 to 10
+		if(ke==KeyCode.UP) this.myShip.setDY(-3);
 
 		if(ke==KeyCode.LEFT) this.myShip.setDX(-3);
 
