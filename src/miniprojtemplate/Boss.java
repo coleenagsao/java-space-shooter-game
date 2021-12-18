@@ -38,7 +38,6 @@ public class Boss extends Enemy{
 
 	public void setHealth(int str) {
 		this.health -= str;
-		System.out.println("[BOSS HIT] Remaining health: " + this.health);
 	}
 
 	public void setMoveRight(boolean value){

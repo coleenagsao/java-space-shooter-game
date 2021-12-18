@@ -7,14 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class GameOverStage {
@@ -41,9 +39,9 @@ public class GameOverStage {
 	}
 
 	private void setProperties(int num){
-		if (num == 0){	//if user wins
+		if (num == 0){								//if user wins
 			this.gc.drawImage(this.lose, 0,0);
-		} else {		//if user loses
+		} else {									//if user loses
 			this.gc.drawImage(this.win, 0,0);
 		}
 

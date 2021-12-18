@@ -3,7 +3,6 @@ package miniprojtemplate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -11,20 +10,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-/*
- * The GameTimer is a subclass of the AnimationTimer class. It must override the handle method.
- */
 
 public class GameTimer extends AnimationTimer{
 
 	private GraphicsContext gc;
 	private Scene theScene;
 	private Ship myShip;
+
 	private ArrayList<Enemy> enemies;
 	public static final int INITIAL_NUM_ENEMIES = 7;
 	public static final int NUM_ENEMIES = 3;
@@ -34,52 +30,50 @@ public class GameTimer extends AnimationTimer{
 	private ArrayList<Boss> boss;
 	private long startSpawn1;
 
-	private ArrayList <Powerups> stars;			//temp
-	private ArrayList <Powerups> plusHealths;	//temp
+	private ArrayList <Powerups> stars;
+	private ArrayList <Powerups> plusHealths;
 
 	private StatusBar statusbar;
-	protected GameStage gameStage;		//temp
+	protected GameStage gameStage;
 
 	public final Image bg = new Image("images/bg3.png",800,500,false,false);
 
 	GameTimer(GraphicsContext gc, Scene theScene, StatusBar status, GameStage stage){
 		this.gc = gc;
-
 		this.theScene = theScene;
 		this.myShip = new Ship("Going merry",150,250);
 		this.gameStage = stage;
+		this.statusbar = status;
 
 		this.startSpawn1 = System.nanoTime();
-
-		this.statusbar = status;
-		//instantiate the ArrayList of Fish
-		this.enemies = new ArrayList<Enemy>();
-		this.boss = new ArrayList<Boss>();
-
-		this.startSpawn = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime());
 		this.elapsedTime = 5;
 
-		this.stars = new ArrayList<Powerups>();			//temp
-		this.plusHealths = new ArrayList<Powerups>();	//temp
+		//instantiate enemies, boss, and powerups
+		this.enemies = new ArrayList<Enemy>();
+		this.boss = new ArrayList<Boss>();
+		this.stars = new ArrayList<Powerups>();
+		this.plusHealths = new ArrayList<Powerups>();
 
-		//call the spawnFishes method
+		//call spawnMethods for enemy, boss, and powerups
 		this.spawnEnemies(GameTimer.INITIAL_NUM_ENEMIES);
+		this.spawnEnemiesInterval();
+		this.spawnBoss();
 
 		this.spawnPowerups(1);
 		this.spawnPowerups(2);
 
-		this.spawnBoss();
-
-		this.spawnEnemiesInterval();
 		//call method to handle mouse click event
 		this.handleKeyPressEvent();
 
-		//this.timer = new Timer();
+		//start timer for statusbar
 		this.runningTime();
 	}
 
 	@Override
 	public void handle(long currentNanoTime) {
+		long currentSec = TimeUnit.NANOSECONDS.toSeconds(currentNanoTime);
+		long startSec = TimeUnit.NANOSECONDS.toSeconds(this.startSpawn1);
+
 		this.gc.clearRect(0, 0, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.gc.drawImage(this.bg, 0, 0);
 
@@ -92,22 +86,20 @@ public class GameTimer extends AnimationTimer{
 		this.myShip.render(this.gc);
 		this.renderBullets();
 		this.renderEnemies();
-
 		this.renderPowerups(1);
 		this.renderPowerups(2);
 
 		//checks if powerups are collected
-		this.elapsedTime = TimeUnit.NANOSECONDS.toSeconds(currentNanoTime);
+		this.checkPowerups(stars, 1, currentSec);
+		this.checkPowerups(plusHealths, 2, currentSec);
 
-		this.checkPowerups(stars, 1, this.elapsedTime);
-		this.checkPowerups(plusHealths, 2, this.elapsedTime);
-
-		long currentSec = TimeUnit.NANOSECONDS.toSeconds(currentNanoTime);
-		long startSec = TimeUnit.NANOSECONDS.toSeconds(this.startSpawn1);
+		//implement statusbar
+		this.renderStatusBar(this.statusbar);
+		this.statusbar.setStatusStrength(this.myShip.getStrength());
+		this.statusbar.renderText();
 
 		//set boss timer spawn
 		Boss boss = this.boss.get(0);
-
 		if((currentSec - startSec) > 30){
 			if(boss.isAlive() == true){
 				boss.setVisible(true);
@@ -116,23 +108,17 @@ public class GameTimer extends AnimationTimer{
 			}
 		}
 
-		//win after 60 seconds
-		if((currentSec - startSec) >= 60){
-			gameStage.setGameOver(1, this.statusbar);
-			this.stop();
-		}
-
-		//implement statusbar
-		this.renderStatusBar(this.statusbar);
-		this.statusbar.setStatusStrength(this.myShip.getStrength());
-		this.statusbar.renderText();
-
-		//check strength
+		//check if user already lost
 		if (myShip.getStrength() <= 0){
 			gameStage.setGameOver(0, this.statusbar);
 			this.stop();
 		}
 
+		//win after 60 seconds
+		if((currentSec - startSec) >= 60){
+			gameStage.setGameOver(1, this.statusbar);
+			this.stop();
+		}
 	}
 
 	//RENDER METHODS

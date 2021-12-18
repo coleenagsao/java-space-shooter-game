@@ -3,18 +3,10 @@ package miniprojtemplate;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -36,9 +28,7 @@ public class GameStage {
 		this.scene = new Scene(root, GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.canvas = new Canvas(GameStage.WINDOW_WIDTH,GameStage.WINDOW_HEIGHT);
 		this.gc = canvas.getGraphicsContext2D();
-		//instantiate an animation timer
 		this.statusbar = new StatusBar();
-		//this.gametimer = new GameTimer(this.gc,this.scene,this.statusbar, this);
 	}
 
 	//method to add the stage elements
@@ -46,7 +36,6 @@ public class GameStage {
 		this.stage = stage;
 
 		this.setMenu(this.gametimer, this);
-		//set stage elements here
 
 		this.root.getChildren().add(canvas);
 		this.root.getChildren().add(statusbar.getTimeText());
@@ -56,16 +45,10 @@ public class GameStage {
 		this.stage.setTitle("Mini Ship Shooting Game");
 		this.stage.setScene(this.scene);
 
-		//invoke the start method of the animation timer
-
-		//this.gametimer.start();
-
 		this.stage.show();
-
-
 	}
 
-	void setGameOver(int num, StatusBar statusbar){ //1 for win; 0 for lose
+	void setGameOver(int num, StatusBar statusbar){
 		PauseTransition transition = new PauseTransition(Duration.seconds(1));
 		transition.play();
 
