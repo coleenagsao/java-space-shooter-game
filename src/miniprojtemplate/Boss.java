@@ -10,10 +10,26 @@ public class Boss extends Enemy{
 
 	Boss(int x, int y) {
 		super(x, y);
-		this.loadImage(Boss.BOSS_IMAGE);
 		this.health = 3000;
 		super.visible = false;
 		super.alive = true;
+		this.loadImage(Boss.BOSS_IMAGE);
+	}
+
+	protected void moveBoss(){									//method similar with move of Enemy but different rightmost boundary
+		if(this.moveRight == false && this.x >= 0){
+			this.x -= this.speed;
+			if(this.x <= 0){
+				this.moveRight = true;
+				this.move();
+			}
+		} else {
+			this.x += this.speed;
+			if(this.x >= (GameStage.WINDOW_WIDTH - 130)){	 //if the rightmost boundary is reached, move to the left
+				this.moveRight = false;
+				this.move();
+			}
+		}
 	}
 
 	public int getHealth() {
@@ -22,11 +38,10 @@ public class Boss extends Enemy{
 
 	public void setHealth(int str) {
 		this.health -= str;
-		System.out.println("hit " + this.health);
+		System.out.println("[BOSS HIT] Remaining health: " + this.health);
 	}
 
 	public void setMoveRight(boolean value){
 		this.moveRight = value;
 	}
-
 }

@@ -292,7 +292,7 @@ public class GameTimer extends AnimationTimer{
 	private void moveBoss(){
 		Boss boss = this.boss.get(0);
 		if(boss.isAlive() == true){
-			boss.move();
+			boss.moveBoss();
 			if (boss.collidesWith(this.myShip)){
 				if (myShip.getIsImmortal() == false){
 					myShip.setStrength(50);								//reduce the ship's strength by 50 when hit by boss

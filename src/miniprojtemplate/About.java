@@ -6,15 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class About {
 	private StackPane pane;
@@ -40,7 +37,7 @@ public class About {
 
 	private void setProperties(int num){
 		if (num == 0){
-			this.gc.drawImage(this.instructions, 0,0); 						//add a hello world to location x=60,y=50
+			this.gc.drawImage(this.instructions, 0,0);
 		} else {
 			this.gc.drawImage(this.about, 0,0);
 		}
@@ -66,7 +63,6 @@ public class About {
         VBox vbox = new VBox();
 
         vbox.setAlignment(Pos.BOTTOM_RIGHT);
-        //vbox.setPadding(new Insets(100));
         vbox.setSpacing(3);
 
 		Button menubtn = new Button("Menu");
@@ -78,6 +74,7 @@ public class About {
 		vbox.getChildren().add(menubtn);
         return vbox;
     }
+
 	Scene getScene(){
 		return this.scene;
 	}

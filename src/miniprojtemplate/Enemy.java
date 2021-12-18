@@ -19,21 +19,21 @@ public class Enemy extends Sprite {
 		this.moveRight = false;
 
 		Random r = new Random();
-		this.speed = r.nextInt(5) + 1;  //set movement between 1 - 5 only
+		this.speed = r.nextInt(5) + 1;  					//set movement between 1 - 5 only
 
 		this.loadImage(Enemy.ENEMY_IMAGE);
 	}
 
-	protected void move(){									//method that changes the x position of the fish
+	protected void move(){									//method that changes the x position of the enemy
 		if(this.moveRight == false && this.x >= 0){
 			this.x -= this.speed;
-			if(this.x <= 0){
+			if(this.x <= 0){								//if the leftmost boundary is reached, move to the right
 				this.moveRight = true;
 				this.move();
 			}
 		} else {
 			this.x += this.speed;
-			if(this.x >= (GameStage.WINDOW_WIDTH - 80)){
+			if(this.x >= (GameStage.WINDOW_WIDTH - 80)){	//if the rightmost boundary is reached, move to the left
 				this.moveRight = false;
 				this.move();
 			}
