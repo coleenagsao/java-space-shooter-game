@@ -16,7 +16,7 @@ To run the project locally, follow these steps:
 2. Under src, run `Main.java`
 
 ## Screenshots
-![Splash Screen](src/images/about.png)
+![Splash Screen](src/images/splash.png)
 *Screenshot of the Splash Screen*
 
 ![About Page](src/images/about.png)
